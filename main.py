@@ -43,21 +43,20 @@ def create_parser ():
 
 
 def main():
-	parser = create_parser()
-	linkspace = parser.parse_args()
-	parsed_link = urlparse(linkspace.link)
-	url = f'{parsed_link.netloc}{parsed_link.path}'
 	load_dotenv()
 	token = os.environ['BITLY_TOKEN']
+	link = create_parser().parse_args().link
+	parsed_link = urlparse(link)
+	url = f'{parsed_link.netloc}{parsed_link.path}'
 	try:
 		if is_bitlink(url, token):
 			sum_of_clicks = count_clicks(url, token)
 			print(f'Количество кликов по {url}: ', sum_of_clicks)
 		else:
-			bitlink = shorten_link(linkspace.link, token)
+			bitlink = shorten_link(link, token)
 			print('Битлинк: ', bitlink)
 	except requests.exceptions.HTTPError:
-		print(f'"{linkspace.link}" - введённая ссылка некорректна!')
+		print(f'"{link}" - введённая ссылка некорректна!')
 
 
 if __name__ == '__main__':
