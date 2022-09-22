@@ -6,22 +6,31 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 
 
-def is_bitlink(url, header):
+def is_bitlink(url, token):
 	bitly_url = f'https://api-ssl.bitly.com/v4/bitlinks/{url}'
+	header = {
+		'Authorization': f'Bearer {token}',
+	}
 	bitly_response = requests.get(bitly_url, headers=header)
 	return bitly_response.ok
 
 
-def shorten_link(link, header):
+def shorten_link(link, token):
 	bitly_url = 'https://api-ssl.bitly.com/v4/bitlinks'
+	header = {
+		'Authorization': f'Bearer {token}',
+	}
 	body = {'long_url': link}
 	bitly_response = requests.post(bitly_url, headers=header, json=body)
 	bitly_response.raise_for_status()
 	return bitly_response.json()['id']
 
 
-def count_clicks(url, header):
+def count_clicks(url, token):
 	bitly_url = f'https://api-ssl.bitly.com/v4/bitlinks/{url}/clicks/summary'
+	header = {
+		'Authorization': f'Bearer {token}',
+	}
 	bitly_response = requests.get(bitly_url, headers=header)
 	bitly_response.raise_for_status()
 	return bitly_response.json()['total_clicks']
@@ -40,15 +49,12 @@ def main():
 	url = f'{parsed_link.netloc}{parsed_link.path}'
 	load_dotenv()
 	token = os.environ['BITLY_TOKEN']
-	header = {
-		'Authorization': f'Bearer {token}',
-	}
 	try:
-		if is_bitlink(url, header):
-			sum_of_clicks = count_clicks(url, header)
+		if is_bitlink(url, token):
+			sum_of_clicks = count_clicks(url, token)
 			print(f'Количество кликов по {url}: ', sum_of_clicks)
 		else:
-			bitlink = shorten_link(linkspace.link, header)
+			bitlink = shorten_link(linkspace.link, token)
 			print('Битлинк: ', bitlink)
 	except requests.exceptions.HTTPError:
 		print(f'"{linkspace.link}" - введённая ссылка некорректна!')
