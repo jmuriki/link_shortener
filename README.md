@@ -8,9 +8,11 @@
 Должен быть установлен python3.
 Затем используйте pip (или pip3, если есть конфликт с python2) для установки зависимостей:
 
-pip install -r requirements.txt
-or
-pip3 install -r requirements.txt
+`pip install -r requirements.txt`
+
+или
+
+`pip3 install -r requirements.txt`
 
 Рекомендуется использовать virtualenv / venv для изоляции проекта.
 
@@ -21,18 +23,18 @@ pip3 install -r requirements.txt
 
 https://app.bitly.com/settings/api/
 
-После генерации ключ должен быть сохранён в .env файл в директорию проекта в следующем формате:
-'BITLY_TOKEN' = 'вставьте сгенерированный вами токен в кавычки'
+После генерации ключ должен быть сохранён в `.env` файл в директорию проекта в следующем формате:
+`BITLY_TOKEN=вместо этого текста вставьте сгенерированный вами токен`
 
 
 ## Запуск
-Находясь в директории проекта, откройте с помощью python3 файл main.py, введя через пробел ссылку, которую хотите сократить:
+Находясь в директории проекта, откройте с помощью python3 файл `main.py`, введя через пробел ссылку, которую хотите сократить:
 
-python3 main.py https://dvmn.org/
+`python3 main.py https://dvmn.org/`
 
 Либо введите короткую ссылку, для того, чтобы получить сумму кликов по ней:
 
-python3 main.py bit.ly/bitly
+`python3 main.py bit.ly/bitly`
 
 
 ## Цель проекта
