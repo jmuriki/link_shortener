@@ -36,7 +36,7 @@ def count_clicks(url, token):
 	return bitly_response.json()["total_clicks"]
 
 
-def create_parser ():
+def create_parser():
 	parser = argparse.ArgumentParser()
 	parser.add_argument ("link")
 	return parser
